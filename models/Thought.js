@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 const formatter = require('../utils/helper.js')
-// Schema to create Student model
+
 const thoughtSchema = new Schema(
   {
     thoughtText: {

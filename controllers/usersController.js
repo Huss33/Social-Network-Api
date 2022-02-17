@@ -1,13 +1,11 @@
 const { User, Thought } = require('../models');
 
-// Aggregate function to get the number of users overall
 const headCount = async () =>
   User.aggregate()
     .count('userCount')
     .then((numberOfUsers) => numberOfUsers);
 
 module.exports = {
-  // Get all users
   getUsers(req, res) {
     User.find()
       .then(async (users) => {
@@ -22,7 +20,6 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Get a single user
   getSingleUser(req, res) {
     User.findById({ _id: req.params.userId })
       .then(async (user) =>
@@ -37,13 +34,11 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Post a new user
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // Update a user
   updateUser(req, res) {
       User.findByIdAndUpdate(
           { _id: req.params.userId },
@@ -57,7 +52,6 @@ module.exports = {
         )
         .catch((err) => res.status(500).json(err));
   },
-  // Delete a student and remove them from the course
   deleteUser(req, res) {
     User.findByIdAndDelete({ _id: req.params.userId })
       .then((user) =>
@@ -82,10 +76,8 @@ module.exports = {
       });
   },
 
-  // Add a friend to a user
   addfriend(req, res) {
     console.log('You are adding a friend');
-    // console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $addToSet: { friends: req.body } },
@@ -100,7 +92,6 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Remove friend from a user
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },

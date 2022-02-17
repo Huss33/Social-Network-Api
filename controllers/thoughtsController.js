@@ -1,13 +1,11 @@
 const { Thought, User } = require('../models');
 
-// Aggregate function to get the number of users overall
 const tCount = async () =>
   User.aggregate()
     .count('thoughtCount')
     .then((numOfthoughts) => numOfthoughts);
 
 module.exports = {
-  // Get all thoughts
   getThoughts(req, res) {
     Thought.find()
       .then(async (thoughts) => {
@@ -22,7 +20,6 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Get a single thought
   getSingleThought(req, res) {
     Thought.findById({ _id: req.params.thoughtId })
       .then(async (thought) =>
@@ -37,13 +34,11 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Post a new thought
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
-  // Update a thought
   updateThought(req, res) {
       Thought.findByIdAndUpdate(
           { _id: req.params.thoughtId },
@@ -57,7 +52,6 @@ module.exports = {
         )
         .catch((err) => res.status(500).json(err));
   },
-  // Delete a thought 
   deleteThought(req, res) {
     Thought.findByIdAndDelete({ _id: req.params.thoughtId })
       .then((thought) =>
@@ -82,7 +76,6 @@ module.exports = {
       });
   },
 
-  // Add a reactioon to a thought
   addReaction(req, res) {
     console.log('You are adding a reaction');
     console.log(req.body);
@@ -100,7 +93,6 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Remove reaction from a thought
   removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
