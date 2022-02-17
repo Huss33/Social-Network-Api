@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-
+const formatter = require('../utils/helper.js')
 // Schema to create Student model
 const thoughtSchema = new Schema(
   {
@@ -12,7 +12,10 @@ const thoughtSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now,
+      default: Date.now(),
+      get: timestamp => {
+        formatter(timestamp);
+      }
       },
     username: [
         {

@@ -1,36 +1,35 @@
 const { Thought, User } = require('../models');
 
 // Aggregate function to get the number of users overall
-const headCount = async () =>
+const tCount = async () =>
   User.aggregate()
-    .count('userCount')
-    .then((numberOfUsers) => numberOfUsers);
+    .count('thoughtCount')
+    .then((numOfthoughts) => numOfthoughts);
 
 module.exports = {
-  // Get all users
-  getUsers(req, res) {
-    User.find()
-      .then(async (users) => {
-        const userObj = {
-          users,
-          headCount: await headCount(),
+  // Get all thoughts
+  getThoughts(req, res) {
+    Thought.find()
+      .then(async (thoughts) => {
+        const thoughtObj = {
+          thoughts,
+          tCount: await tCount(),
         };
-        return res.json(userObj);
+        return res.json(thoughtObj);
       })
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
       });
   },
-  // Get a single user
-  getSingleUser(req, res) {
-    User.findById({ _id: req.params.userId })
-      .then(async (user) =>
-        !user
-          ? res.status(404).json({ message: 'No user with that id' })
+  // Get a single thought
+  getSinglethought(req, res) {
+    Thought.findById({ _id: req.params.thoughtId })
+      .then(async (thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thoughts with that id' })
           : res.json({
-            user,
-              grade: await grade(req.params.userId),
+            thought,
             })
       )
       .catch((err) => {
@@ -38,44 +37,44 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Post a new user
-  createUser(req, res) {
-    User.create(req.body)
-      .then((user) => res.json(user))
+  // Post a new thought
+  createthought(req, res) {
+    Thought.create(req.body)
+      .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
   // Update a user
-  updateUser(req, res) {
-      User.findByIdAndUpdate(
-          { _id: req.params.userId },
+  updatethought(req, res) {
+      Thought.findByIdAndUpdate(
+          { _id: req.params.thoughtId },
           { $set: req.body },
           { runValidators: true, new: true }
       )
-        .then((user) => 
-          !user
-          ?res.status(400).json({ 'No user with this id!' })
-          : res.json(user)
+        .then((thought) => 
+          !thought
+          ?res.status(400).json({ 'No thoughts with this id!' })
+          : res.json(thought)
         )
         .catch((err) => res.status(500).json(err));
   },
   // Delete a student and remove them from the course
-  deleteUser(req, res) {
-    User.findByIdAndDelete({ _id: req.params.userId })
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: 'No such user exists' })
+  deletethought(req, res) {
+    Thought.findByIdAndDelete({ _id: req.params.thoughtId })
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No such thought exists' })
           : Thought.findByIdAndUpdate(
               { thoughts: req.params.thoughtId },
               { $pull: { thoughts: req.params.thoughtId } },
               { new: true }
             )
       )
-      .then((course) =>
+      .then((thought) =>
         !thought
           ? res.status(404).json({
-              message: 'User deleted, but no corresponding thoughts',
+              message: 'Something went wrong',
             })
-          : res.json({ message: 'User and thought successfully deleted' })
+          : res.json({ message: 'Thought successfully deleted' })
       )
       .catch((err) => {
         console.log(err);
