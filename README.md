@@ -15,10 +15,6 @@ Project video link: https://drive.google.com/file/d/17rehlCBsIfUQOSImeJpOTcDmeRw
 
 - Allows user to GET(find), POST(create), PUT(edit) and DELETE both Users and Thoughts
 - Allows user to POST(create) and DELETE Reactions
-## Screenshots
-
-![App Video](https://drive.google.com/file/d/17rehlCBsIfUQOSImeJpOTcDmeRwtlw8Y/view) 
-
 
 ## Roadmap
 
