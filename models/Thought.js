@@ -17,13 +17,9 @@ const thoughtSchema = new Schema(
         formatter(timestamp);
       }
       },
-    username: [
-        {
-            type: Schema.Types.username,
-            ref: 'user',
-        },
-     ],
-     reactions: [reactionSchema],
+    username: {type: String, required: true},
+
+    reactions: [reactionSchema],
   },
   {
     toJSON: {

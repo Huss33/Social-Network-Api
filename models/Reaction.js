@@ -11,7 +11,6 @@ const reactionSchema = new Schema(
       required: true,
       maxlength: 280,
       minlength: 4,
-    //   default: [],
     },
     username: {
       type: String,
@@ -20,9 +19,6 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: timeStamp => {
-        
-      }
     },
   },
   {

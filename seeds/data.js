@@ -91,24 +91,19 @@ const userNames = [
     'What happens when a poison expires? Does it become more poisonous or no longer remains so?',
   ];
   
-  // Get a random item given an array
   const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
   
-  // Gets a random full name
   const getRandomUserName = () =>
     `${getRandomArrItem(userNames)}`;
   
-  // Function to generate random assignments that we can add to student object.
   const getRandomThought = (int) => {
     const results = [];
     for (let i = 0; i < int; i++) {
       results.push({
         thought: getRandomArrItem(thoughts)
-        // score: Math.floor(Math.random() * (99 - 70 + 1) + 70),
       });
     }
     return results;
   };
   
-  // Export the functions for use in seed.js
   module.exports = { getRandomUserName, getRandomThought };

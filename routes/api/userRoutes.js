@@ -13,7 +13,7 @@ router.route('/').get(getUsers).post(createUser);
 
 router.route('/:userId')
 .get(getSingleUser)
-.update(updateUser)
+.put(updateUser)
 .delete(deleteUser);
 
 router.route('/:userId/friends').post(addfriend);
